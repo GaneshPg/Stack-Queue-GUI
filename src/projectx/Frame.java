@@ -18,6 +18,7 @@ import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingWorker;
 
@@ -55,7 +56,9 @@ public class Frame extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         JTabbedPane tab = new JTabbedPane(); //For the tabs at the top
-
+        
+        JScrollPane sp = new JScrollPane();
+                
         stackPanel = new JPanel();
         stackPanel.setLayout(new BorderLayout());
         tab.addTab("Stack", stackPanel);
@@ -63,15 +66,15 @@ public class Frame extends JFrame {
 
         //Stack heading and styling
         JLabel stackTitle = new JLabel("DATA STRUCTURES : DEMONSTRATION OF THE STACK");
-        stackTitle.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+        stackTitle.setFont(new Font("Baskerville Old Face", Font.PLAIN, 25));
         stackTitle.setForeground(Color.yellow);
         stackTitle.setPreferredSize(new Dimension(800, 80));
         JPanel stackTitlePanel = new JPanel();
-        stackTitlePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 450, 0));
+        stackTitlePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 350, 0));
         stackTitlePanel.setBackground(Color.darkGray);
         stackTitlePanel.add(stackTitle);
 
-        stackPanel.add(stackTitlePanel, BorderLayout.NORTH);
+        //stackPanel.add(stackTitlePanel, BorderLayout.NORTH);
 
         stk_undo = new Stack(3);
         stk_isRandom = false;
@@ -95,18 +98,32 @@ public class Frame extends JFrame {
 
         //Message display panel and styling
         stackMessage = new JLabel(">>>Welcome to Stack Demo. An empty stack has been made. Stack Top = -1");
-        stackMessage.setForeground(Color.lightGray);
+        stackMessage.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+        stackMessage.setForeground(Color.white);
         stackMessagePanel = new JPanel();
-        stackMessagePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+        //stackMessagePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+        
         stackMessagePanel.setBackground(Color.BLACK);
         stackMessagePanel.add(stackMessage);
 
-        Box stackDisplayBox = Box.createVerticalBox();
+        Box stackDisplayBox = Box.createHorizontalBox();
         stackDisplayBox.add(stackDisplayPanel);
-        stackDisplayBox.add(stackMessagePanel);
+        StackDisplay s1 = new StackDisplay();
+        JPanel stackDisplayPanel1 = new JPanel();
+        stackDisplayPanel1.add(Box.createRigidArea(new Dimension(0, 425)));
+        stackDisplayPanel1.add(s1);
+        stackDisplayPanel1.setBorder(BorderFactory.createEtchedBorder(Color.DARK_GRAY, Color.LIGHT_GRAY));
+        stackDisplayBox.add(stackDisplayPanel1);
+        //stackDisplayBox.add(stackMessagePanel);
+        sp.setViewportView(stackDisplayBox);
+        sp.setVisible(true);
 
-        stackPanel.add(stackDisplayBox, BorderLayout.CENTER);
-        stackPanel.add(stackMenuPanel, BorderLayout.SOUTH);
+        stackPanel.add(sp, BorderLayout.CENTER);
+        Box topDisplay = Box.createVerticalBox();
+        topDisplay.add(stackTitlePanel);
+        topDisplay.add(stackMessagePanel);
+        topDisplay.add(stackMenuPanel);
+        stackPanel.add(topDisplay, BorderLayout.NORTH);
         stackPanel.updateUI();
 
         //Interface to set the text in the Message Panel
