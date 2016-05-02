@@ -13,6 +13,7 @@ import java.text.NumberFormat;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -116,7 +117,12 @@ public class StackMenu extends JPanel {
         resetPanel.add(resetButton);
         resetPanel.setBackground(Color.lightGray);
         stackBox.add(resetPanel);
-
+        
+        String n[]={"1","2"};
+        
+        JComboBox s = new JComboBox(n);
+        stackBox.add(s);
+        
         super.add(stackBox);
     }
 }

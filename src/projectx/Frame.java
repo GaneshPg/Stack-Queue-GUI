@@ -74,8 +74,6 @@ public class Frame extends JFrame {
         stackTitlePanel.setBackground(Color.darkGray);
         stackTitlePanel.add(stackTitle);
 
-        //stackPanel.add(stackTitlePanel, BorderLayout.NORTH);
-
         stk_undo = new Stack(3);
         stk_isRandom = false;
 
@@ -101,7 +99,6 @@ public class Frame extends JFrame {
         stackMessage.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
         stackMessage.setForeground(Color.white);
         stackMessagePanel = new JPanel();
-        //stackMessagePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         
         stackMessagePanel.setBackground(Color.BLACK);
         stackMessagePanel.add(stackMessage);
