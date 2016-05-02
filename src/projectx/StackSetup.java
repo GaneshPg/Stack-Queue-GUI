@@ -10,8 +10,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -28,6 +26,11 @@ public class StackSetup extends JPanel{
     
     boolean isDynamicStack;
     int numberOfStacks;
+    JLabel stackMessage;
+    JPanel stackMessagePanel;
+    JButton createStackButton;
+    JCheckBox dynamicStackYes;
+    JComboBox stackNumberComboBox;
     
     public StackSetup(){
         
@@ -35,7 +38,7 @@ public class StackSetup extends JPanel{
         numberOfStacks = 1;
         
         JPanel stackPanel = new JPanel();
-        /*stackPanel.setLayout(new BorderLayout());
+        stackPanel.setLayout(new BorderLayout());
         
         JLabel stackTitle = new JLabel("DATA STRUCTURES : DEMONSTRATION OF THE STACK");
         stackTitle.setFont(new Font("Baskerville Old Face", Font.PLAIN, 25));
@@ -46,13 +49,26 @@ public class StackSetup extends JPanel{
         stackTitlePanel.setBackground(Color.darkGray);
         stackTitlePanel.add(stackTitle);
         
-        stackPanel.add(stackTitlePanel,BorderLayout.NORTH);*/
+        //stackMessage = new JLabel(">>>Welcome to Stack Demo. An empty stack has been made. Stack Top = -1");
+        stackMessage = new JLabel(">>>Please select the settings for the stack and press the create stack button");
+        stackMessage.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+        stackMessage.setForeground(Color.white);
+        stackMessagePanel = new JPanel();
+        
+        stackMessagePanel.setBackground(Color.BLACK);
+        stackMessagePanel.add(stackMessage);
+        
+        Box topDisplay = Box.createVerticalBox();
+        topDisplay.add(stackTitlePanel);
+        topDisplay.add(stackMessagePanel);
+        
+        stackPanel.add(topDisplay,BorderLayout.NORTH);
         
         JPanel selectStackPanel = new JPanel();
         
         JLabel selectStackLabel = new JLabel("Select number of stacks :   ");
         String numbers[]={"1","2","3","4","5"};
-        JComboBox stackNumberComboBox = new JComboBox(numbers);
+        stackNumberComboBox = new JComboBox(numbers);
         stackNumberComboBox.setSelectedIndex(0);
         
         selectStackPanel.add(selectStackLabel);
@@ -67,7 +83,7 @@ public class StackSetup extends JPanel{
         
         JLabel dynamicStackLabel = new JLabel("Dynamic Stack :  ");
         
-        JCheckBox dynamicStackYes = new JCheckBox("Yes");
+        dynamicStackYes = new JCheckBox("Yes");
         JCheckBox dynamicStackNo = new JCheckBox("No");
         
         ButtonGroup dynamicStackBtnGroup = new ButtonGroup();
@@ -84,7 +100,7 @@ public class StackSetup extends JPanel{
         
         verticalBox.add(Box.createRigidArea(new Dimension(0,10)));
         
-        JButton createStackButton = new JButton("Create Stack");
+        createStackButton = new JButton("Create Stack");
         JPanel buttonPanel= new JPanel();
         buttonPanel.add(createStackButton);
         
@@ -98,12 +114,6 @@ public class StackSetup extends JPanel{
         
         super.add(stackPanel);
        
-       createStackButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent ae) {              
-                isDynamicStack = dynamicStackYes.isSelected();
-                numberOfStacks = stackNumberComboBox.getSelectedIndex() + 1;
-            }
-        });
     }
       
 }
