@@ -40,18 +40,17 @@ public class StackSetup extends JPanel{
         JPanel stackPanel = new JPanel();
         stackPanel.setLayout(new BorderLayout());
         
-        JLabel stackTitle = new JLabel("DATA STRUCTURES : DEMONSTRATION OF THE STACK");
-        stackTitle.setFont(new Font("Baskerville Old Face", Font.PLAIN, 25));
+        JLabel stackTitle = new JLabel("<HTML><U>DATA STRUCTURES : DEMONSTRATION OF THE STACK</U></HTML>");
+        stackTitle.setFont(new Font("Baskerville Old Face", Font.PLAIN, 28));
         stackTitle.setForeground(Color.yellow);
         stackTitle.setPreferredSize(new Dimension(800, 80));
         JPanel stackTitlePanel = new JPanel();
-        stackTitlePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 350, 0));
+        stackTitlePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 450, 0));
         stackTitlePanel.setBackground(Color.darkGray);
         stackTitlePanel.add(stackTitle);
         
-        //stackMessage = new JLabel(">>>Welcome to Stack Demo. An empty stack has been made. Stack Top = -1");
         stackMessage = new JLabel(">>>Please select the settings for the stack and press the create stack button");
-        stackMessage.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+        stackMessage.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
         stackMessage.setForeground(Color.white);
         stackMessagePanel = new JPanel();
         

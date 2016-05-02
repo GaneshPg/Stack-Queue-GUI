@@ -25,10 +25,11 @@ import javax.swing.SwingWorker;
  */
 public class StackFrame extends JPanel{
     
-    Stack choiceStack;
     boolean isRandom;
-    StackDisplay stackDisplay;
-    JPanel stackDisplayPanel;
+    boolean isDynamic;
+    Stack[] choiceStack;
+    StackDisplay[] stackDisplay;
+    JPanel[] stackDisplayPanel;
     StackMenu stackMenu;
     JPanel stackMenuPanel;
     JPanel stackPanel;
@@ -37,27 +38,28 @@ public class StackFrame extends JPanel{
     
     StackFrame(int numberOfStacks,boolean isDynamicStack){
         
-        choiceStack = new Stack(3);
+        choiceStack = new Stack[numberOfStacks];
+        for(int i=0;i<numberOfStacks;i++)
+            choiceStack[i] = new Stack(3);
         isRandom = false;
-
-        JScrollPane scrollPane = new JScrollPane();
+        isDynamic = isDynamicStack;
         
         stackPanel = new JPanel(new BorderLayout());
         
         //Stack title and styling
-        JLabel stackTitle = new JLabel("DATA STRUCTURES : DEMONSTRATION OF THE STACK");
-        stackTitle.setFont(new Font("Baskerville Old Face", Font.PLAIN, 25));
+        JLabel stackTitle = new JLabel("<HTML><U>DATA STRUCTURES : DEMONSTRATION OF THE STACK</U></HTML>");
+        stackTitle.setFont(new Font("Baskerville Old Face", Font.PLAIN, 28));
         stackTitle.setForeground(Color.yellow);
         stackTitle.setPreferredSize(new Dimension(800, 80));
         
         JPanel stackTitlePanel = new JPanel();
-        stackTitlePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 350, 0));
+        stackTitlePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 450, 0));
         stackTitlePanel.setBackground(Color.darkGray);
         stackTitlePanel.add(stackTitle);
         
         //Stack message panel and styling
         stackMessage = new JLabel(">>>Stack setup has been made as requested. Perform operations from the menu");
-        stackMessage.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+        stackMessage.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
         stackMessage.setForeground(Color.white);
         
         stackMessagePanel = new JPanel();
@@ -65,7 +67,7 @@ public class StackFrame extends JPanel{
         stackMessagePanel.add(stackMessage);
         
         //Stack Menu and styling
-        stackMenu = new StackMenu();
+        stackMenu = new StackMenu(numberOfStacks);
         stackMenu.setBackground(Color.DARK_GRAY);
         
         stackMenuPanel = new JPanel();
@@ -81,35 +83,35 @@ public class StackFrame extends JPanel{
         topDisplay.add(stackMenuPanel);
         
         stackPanel.add(topDisplay, BorderLayout.NORTH);
-
+        
+        stackDisplay = new StackDisplay[numberOfStacks];
+        stackDisplayPanel = new JPanel[numberOfStacks];
+        
         //Stack display and styling
-        stackDisplay = new StackDisplay();
-        stackDisplayPanel = new JPanel();
-        stackDisplayPanel.add(Box.createRigidArea(new Dimension(0, 425)));
-        stackDisplayPanel.add(stackDisplay);
-        stackDisplayPanel.setBorder(BorderFactory.createEtchedBorder(Color.DARK_GRAY, Color.LIGHT_GRAY));
+        for(int i=0;i<numberOfStacks;i++){
+            stackDisplay[i] = new StackDisplay();
+            stackDisplayPanel[i] = new JPanel();
+            stackDisplayPanel[i].add(Box.createRigidArea(new Dimension(0, 425)));
+            stackDisplayPanel[i].add(stackDisplay[i]);
+            stackDisplayPanel[i].setBorder(BorderFactory.createEtchedBorder(Color.DARK_GRAY, Color.LIGHT_GRAY));
+        }
 
         Box stackDisplayBox = Box.createHorizontalBox();
-        stackDisplayBox.add(stackDisplayPanel);
-        /*StackDisplay s1 = new StackDisplay();
-        JPanel stackDisplayPanel1 = new JPanel();
-        stackDisplayPanel1.add(Box.createRigidArea(new Dimension(0, 425)));
-        stackDisplayPanel1.add(s1);
-        stackDisplayPanel1.setBorder(BorderFactory.createEtchedBorder(Color.DARK_GRAY, Color.LIGHT_GRAY));
-        stackDisplayBox.add(stackDisplayPanel1);*/
-        scrollPane.setViewportView(stackDisplayBox);
-        scrollPane.setVisible(true);
+        for(int i=0;i<numberOfStacks;i++)
+            stackDisplayBox.add(stackDisplayPanel[i]);
         
-        stackPanel.add(scrollPane, BorderLayout.CENTER);
+        stackPanel.add(stackDisplayBox, BorderLayout.CENTER);
         
         super.add(stackPanel);
 
         //Interface to set the text in the Message Panel
-        stackDisplay.textSetter = new TextInterface() {
-            public void setText(String str) {
-                stackMessage.setText(">>>" + str);
-            }
-        };
+        for (int i = 0; i < numberOfStacks; i++) {
+            stackDisplay[i].textSetter = new TextInterface() {
+                public void setText(String str) {
+                    stackMessage.setText(">>>" + str);
+                }
+            };
+        }
 
         addStackActionListeners(); //Function to add the actionlisteners to the buttons
     }
@@ -121,16 +123,17 @@ public class StackFrame extends JPanel{
             public void actionPerformed(ActionEvent ae) {
                 String str = stackMenu.text.getText();
                 stackMenu.text.setValue(null);
+                int selectedStack = stackMenu.selectDropDown.getSelectedIndex();
                 if (isNum(str)) {
                     str = str.replace(",", "");
                     int num = Integer.parseInt(str);
-                    stackDisplay.update_push(num, choiceStack);
+                    stackDisplay[selectedStack].update_push(num, choiceStack[selectedStack]);
                     stackMenu.resetButton.setEnabled(true);
                     stackMenu.resetEnabled = true;
                 } else {
-                    stackDisplay.textSetter.setText("Invalid number");
+                    stackDisplay[selectedStack].textSetter.setText("Invalid number");
                 }
-                if (choiceStack.top != -1) {
+                if (choiceStack[selectedStack].top != -1) {
                     stackMenu.undoButton.setEnabled(true);
                     stackMenu.undoEnabled = true;
                 }
@@ -141,11 +144,12 @@ public class StackFrame extends JPanel{
         //Pop Button on click actionlistener
         stackMenu.popButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                stackDisplay.update_pop(choiceStack);
-                if (choiceStack.top != -1) {
+                int selectedStack = stackMenu.selectDropDown.getSelectedIndex();
+                stackDisplay[selectedStack].update_pop(choiceStack[selectedStack]);
+                if (choiceStack[selectedStack].top != -1) {
                     stackMenu.undoButton.setEnabled(true);
                 }
-                if (stackDisplay.stack.top == -1 && choiceStack.top == -1) {
+                if (stackDisplay[selectedStack].stack.top == -1 && choiceStack[selectedStack].top == -1) {
                     stackMenu.resetButton.setEnabled(false);
                 }
                 stackPanel.updateUI();
@@ -155,20 +159,21 @@ public class StackFrame extends JPanel{
         //Undo Button on click actionlistener
         stackMenu.undoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                int choice = choiceStack.pop();
+                int selectedStack = stackMenu.selectDropDown.getSelectedIndex();
+                int choice = choiceStack[selectedStack].pop();
                 if (choice == 0) {
                     //Recent operation was push
-                    stackDisplay.undoPush();
-                    if (stackDisplay.stack.top == -1 && choiceStack.top == -1) {
+                    stackDisplay[selectedStack].undoPush();
+                    if (stackDisplay[selectedStack].stack.top == -1 && choiceStack[selectedStack].top == -1) {
                         stackMenu.resetButton.setEnabled(false);
                     }
                 } else {
                     //Recent operation was pop
-                    stackDisplay.undoPop();
+                    stackDisplay[selectedStack].undoPop();
                     stackMenu.resetButton.setEnabled(true);
 
                 }
-                if (choiceStack.top == -1) {
+                if (choiceStack[selectedStack].top == -1) {
                     stackMenu.undoButton.setEnabled(false);
                     stackMenu.undoEnabled = false;
                 }
@@ -182,15 +187,18 @@ public class StackFrame extends JPanel{
                 if (!isRandom) {
                     isRandom = true;
                     stackMenu.randomButton.setText("Stop");
+                    stackMenu.selectDropDown.setEnabled(false);
                     stackMenu.text.setEnabled(false);
                     stackMenu.pushButton.setEnabled(false);
                     stackMenu.popButton.setEnabled(false);
                     stackMenu.undoButton.setEnabled(false);
                     stackMenu.resetButton.setEnabled(false);
-                    startStackRandom();
+                    int selectedStack = stackMenu.selectDropDown.getSelectedIndex();
+                    startStackRandom(selectedStack);
                 } else {
                     isRandom = false;
                     stackMenu.randomButton.setText("Random");
+                    stackMenu.selectDropDown.setEnabled(true);
                     stackMenu.text.setEnabled(true);
                     stackMenu.pushButton.setEnabled(true);
                     stackMenu.popButton.setEnabled(true);
@@ -203,8 +211,9 @@ public class StackFrame extends JPanel{
         //Reset Button on click actionlistener
         stackMenu.resetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                stackDisplay.reset();
-                choiceStack.top = -1;
+                int selectedStack = stackMenu.selectDropDown.getSelectedIndex();
+                stackDisplay[selectedStack].reset();
+                choiceStack[selectedStack].top = -1;
                 stackMenu.undoButton.setEnabled(false);
                 stackMenu.undoEnabled = false;
                 stackMenu.resetButton.setEnabled(false);
@@ -215,12 +224,12 @@ public class StackFrame extends JPanel{
     }
 
     //Function to implement automatic random operations in Stack
-    private void startStackRandom() {
+    private void startStackRandom(int selectedStack) {
         SwingWorker<Void, Void> stk_random = new SwingWorker<Void, Void>() {
             protected Void doInBackground() throws Exception { //Repeatedly performs random operations on a background thread
                 Thread.sleep(100);
-                stackDisplay.random(choiceStack);
-                if (choiceStack.top != -1) {
+                stackDisplay[selectedStack].random(choiceStack[selectedStack]);
+                if (choiceStack[selectedStack].top != -1) {
                     stackMenu.undoEnabled = true;
                 }
                 stackMenu.resetEnabled = true;
@@ -231,7 +240,7 @@ public class StackFrame extends JPanel{
 
             protected void done() {
                 if (isRandom) {
-                    startStackRandom();
+                    startStackRandom(selectedStack);
                 }
             }
         };

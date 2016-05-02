@@ -45,8 +45,8 @@ public class QueueFrame extends JPanel{
         qPanel = new JPanel(new BorderLayout());
         
         //Queue title and styling
-        JLabel qTitle = new JLabel("DATA STRUCTURES : DEMONSTRATION OF THE QUEUE");
-        qTitle.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+        JLabel qTitle = new JLabel("<HTML><U>DATA STRUCTURES : DEMONSTRATION OF THE QUEUE</U></HTML>");
+        qTitle.setFont(new Font("Baskerville Old Face", Font.PLAIN, 28));
         qTitle.setForeground(Color.yellow);
         qTitle.setPreferredSize(new Dimension(800, 80));
         
@@ -58,7 +58,7 @@ public class QueueFrame extends JPanel{
         //Queue message panel and styling
         qMessage = new JLabel(">>>Welcome to Queue Demo. An empty queue has been made. Front = 0, Rear = -1");
         qMessage.setForeground(Color.white);
-        qMessage.setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+        qMessage.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
         
         qMessagePanel = new JPanel();
         qMessagePanel.setBackground(Color.BLACK);

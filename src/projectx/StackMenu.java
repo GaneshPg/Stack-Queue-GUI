@@ -15,6 +15,7 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
@@ -34,8 +35,9 @@ public class StackMenu extends JPanel {
     public JButton randomButton;
     public JFormattedTextField text;
     public boolean undoEnabled, resetEnabled;
+    public JComboBox selectDropDown;
 
-    public StackMenu() {
+    public StackMenu(int numberOfStacks) {
 
         super();
 
@@ -49,10 +51,25 @@ public class StackMenu extends JPanel {
 
         super.setBorder(BorderFactory.createCompoundBorder(compound, line));
 
-        Box stackBox = Box.createHorizontalBox();
-
-        JPanel pushPanel = new JPanel();
-        pushPanel.setLayout(new FlowLayout()); //Layout for textfield and push button
+        Box menuBox = Box.createHorizontalBox();
+        
+        String numbers[] = new String[numberOfStacks];
+        for(int i=1;i<=numberOfStacks;i++)
+            numbers[i-1] = Integer.toString(i);
+        
+        selectDropDown = new JComboBox(numbers);
+        selectDropDown.setSelectedIndex(0);
+        
+        JPanel selectPanel = new JPanel(new FlowLayout());
+        selectPanel.setBackground(Color.lightGray);
+        JLabel selectLabel = new JLabel("Select stack :  ");
+        selectLabel.setFont(new Font(Font.SERIF, Font.PLAIN, 17));
+        selectPanel.add(selectLabel);
+        selectPanel.add(selectDropDown);
+        
+        menuBox.add(selectPanel);
+        
+        JPanel pushPanel = new JPanel(new FlowLayout()); //Panel for textfield and push button
 
         //Text field to enter a number to push
         NumberFormat format = NumberFormat.getInstance();
@@ -70,7 +87,7 @@ public class StackMenu extends JPanel {
         pushPanel.add(text);
         pushPanel.add(pushButton);
         pushPanel.setBackground(Color.lightGray);
-        stackBox.add(pushPanel);
+        menuBox.add(pushPanel);
 
         //Pop button properties
         popButton = new JButton("Pop");
@@ -81,7 +98,7 @@ public class StackMenu extends JPanel {
         popPanel.setLayout(new FlowLayout());
         popPanel.add(popButton);
         popPanel.setBackground(Color.lightGray);
-        stackBox.add(popPanel);
+        menuBox.add(popPanel);
 
         //Random button properties
         randomButton = new JButton("Random");
@@ -92,7 +109,7 @@ public class StackMenu extends JPanel {
         randomPanel.setLayout(new FlowLayout());
         randomPanel.add(randomButton);
         randomPanel.setBackground(Color.lightGray);
-        stackBox.add(randomPanel);
+        menuBox.add(randomPanel);
 
         //Undo button properties
         undoButton = new JButton("Undo");
@@ -104,7 +121,7 @@ public class StackMenu extends JPanel {
         undoButton.setEnabled(false);
         undoPanel.add(undoButton);
         undoPanel.setBackground(Color.lightGray);
-        stackBox.add(undoPanel);
+        menuBox.add(undoPanel);
 
         //Reset button properties
         resetButton = new JButton("Reset");
@@ -116,13 +133,8 @@ public class StackMenu extends JPanel {
         resetButton.setEnabled(false);
         resetPanel.add(resetButton);
         resetPanel.setBackground(Color.lightGray);
-        stackBox.add(resetPanel);
+        menuBox.add(resetPanel);
         
-        String n[]={"1","2"};
-        
-        JComboBox s = new JComboBox(n);
-        stackBox.add(s);
-        
-        super.add(stackBox);
+        super.add(menuBox);
     }
 }
