@@ -16,7 +16,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.SwingWorker;
 
 /**
@@ -127,15 +126,9 @@ public class StackFrame extends JPanel{
                 if (isNum(str)) {
                     str = str.replace(",", "");
                     int num = Integer.parseInt(str);
-                    stackDisplay[selectedStack].update_push(num, choiceStack[selectedStack]);
-                    stackMenu.resetButton.setEnabled(true);
-                    stackMenu.resetEnabled = true;
+                    stackDisplay[selectedStack].update_push(num, choiceStack[selectedStack],selectedStack);
                 } else {
-                    stackDisplay[selectedStack].textSetter.setText("Invalid number");
-                }
-                if (choiceStack[selectedStack].top != -1) {
-                    stackMenu.undoButton.setEnabled(true);
-                    stackMenu.undoEnabled = true;
+                    stackMessage.setText(">>>Invalid number. Enter a valid number to be pushed.");
                 }
                 stackPanel.updateUI();
             }
@@ -145,13 +138,7 @@ public class StackFrame extends JPanel{
         stackMenu.popButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 int selectedStack = stackMenu.selectDropDown.getSelectedIndex();
-                stackDisplay[selectedStack].update_pop(choiceStack[selectedStack]);
-                if (choiceStack[selectedStack].top != -1) {
-                    stackMenu.undoButton.setEnabled(true);
-                }
-                if (stackDisplay[selectedStack].stack.top == -1 && choiceStack[selectedStack].top == -1) {
-                    stackMenu.resetButton.setEnabled(false);
-                }
+                stackDisplay[selectedStack].update_pop(choiceStack[selectedStack],selectedStack);
                 stackPanel.updateUI();
             }
         });
@@ -160,22 +147,19 @@ public class StackFrame extends JPanel{
         stackMenu.undoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 int selectedStack = stackMenu.selectDropDown.getSelectedIndex();
+                if(choiceStack[selectedStack].nElts == 0){
+                    stackMessage.setText(">>>Cannot undo any more operations on Stack " + 
+                            Integer.toString(selectedStack+1) +
+                            ".Perform some other operation and try again.");
+                    return;
+                }
                 int choice = choiceStack[selectedStack].pop();
                 if (choice == 0) {
                     //Recent operation was push
-                    stackDisplay[selectedStack].undoPush();
-                    if (stackDisplay[selectedStack].stack.top == -1 && choiceStack[selectedStack].top == -1) {
-                        stackMenu.resetButton.setEnabled(false);
-                    }
+                    stackDisplay[selectedStack].undoPush(selectedStack);
                 } else {
                     //Recent operation was pop
-                    stackDisplay[selectedStack].undoPop();
-                    stackMenu.resetButton.setEnabled(true);
-
-                }
-                if (choiceStack[selectedStack].top == -1) {
-                    stackMenu.undoButton.setEnabled(false);
-                    stackMenu.undoEnabled = false;
+                    stackDisplay[selectedStack].undoPop(selectedStack);
                 }
                 stackPanel.updateUI();
             }
@@ -202,8 +186,8 @@ public class StackFrame extends JPanel{
                     stackMenu.text.setEnabled(true);
                     stackMenu.pushButton.setEnabled(true);
                     stackMenu.popButton.setEnabled(true);
-                    stackMenu.undoButton.setEnabled(stackMenu.undoEnabled);
-                    stackMenu.resetButton.setEnabled(stackMenu.resetEnabled);
+                    stackMenu.undoButton.setEnabled(true);
+                    stackMenu.resetButton.setEnabled(true);
                 }
             }
         });
@@ -212,12 +196,8 @@ public class StackFrame extends JPanel{
         stackMenu.resetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 int selectedStack = stackMenu.selectDropDown.getSelectedIndex();
-                stackDisplay[selectedStack].reset();
+                stackDisplay[selectedStack].reset(selectedStack);
                 choiceStack[selectedStack].top = -1;
-                stackMenu.undoButton.setEnabled(false);
-                stackMenu.undoEnabled = false;
-                stackMenu.resetButton.setEnabled(false);
-                stackMenu.resetEnabled = false;
                 stackPanel.updateUI();
             }
         });
@@ -228,11 +208,7 @@ public class StackFrame extends JPanel{
         SwingWorker<Void, Void> stk_random = new SwingWorker<Void, Void>() {
             protected Void doInBackground() throws Exception { //Repeatedly performs random operations on a background thread
                 Thread.sleep(100);
-                stackDisplay[selectedStack].random(choiceStack[selectedStack]);
-                if (choiceStack[selectedStack].top != -1) {
-                    stackMenu.undoEnabled = true;
-                }
-                stackMenu.resetEnabled = true;
+                stackDisplay[selectedStack].random(choiceStack[selectedStack],selectedStack);
                 stackPanel.updateUI();
                 Thread.sleep(750);
                 return null;

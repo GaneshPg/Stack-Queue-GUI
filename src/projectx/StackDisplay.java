@@ -90,12 +90,13 @@ public class StackDisplay extends JPanel {
     }
 
     //Function to update GUI when push button is pressed
-    public void update_push(int num, Stack undo) {
+    public void update_push(int num, Stack undo,int stackNumber) {
         
         //Check if stack is full
         if (stack.top == stack.size - 1) {
             //Stack full message
-            textSetter.setText("The stack is full! Cannot push more elements. Top = " + Integer.toString(stack.top));
+            textSetter.setText("Stack "+ Integer.toString(stackNumber + 1) +
+                    " is full! Cannot push more elements. Top = " + Integer.toString(stack.top));
             return;
         }
         
@@ -109,15 +110,17 @@ public class StackDisplay extends JPanel {
         topPanel[stack.size - stack.nElts].add(topLabel); //topLabel points to new top
         dispSquareArray[stack.size - stack.nElts].setText(Integer.toString(num)); //Display new element
         //Display message of successful push
-        textSetter.setText(Integer.toString(num) + " has been pushed on to the stack. Top = " + Integer.toString(stack.top));
+        textSetter.setText(Integer.toString(num) + " has been pushed on to Stack "+ Integer.toString(stackNumber + 1) +
+                ". Top = " + Integer.toString(stack.top));
     }
 
-    public void update_pop(Stack undo) {
+    public void update_pop(Stack undo,int stackNumber) {
         
         //Check if stack is empty
         if (stack.top == -1) {
             //Stack empty message
-            textSetter.setText("The stack is empty! Cannot pop. Top = " + Integer.toString(stack.top));
+            textSetter.setText("Stack "+ Integer.toString(stackNumber + 1) +
+                    " is empty! Cannot pop any element. Top = " + Integer.toString(stack.top));
             return;
         }
         
@@ -135,29 +138,32 @@ public class StackDisplay extends JPanel {
         popStack.push(num); //Storing recently popped element for undo purpose
         topPanel[stack.size - stack.nElts].add(topLabel); //Updating topLabel to point to new top
         //Display message of successful pop
-        textSetter.setText(Integer.toString(num) + " has been popped from the stack. Top = " + Integer.toString(stack.top));
+        textSetter.setText(Integer.toString(num) + " has been popped from Stack "+ Integer.toString(stackNumber + 1)+
+                ". Top = " + Integer.toString(stack.top));
     }
 
-    public void undoPush() {
+    public void undoPush(int stackNumber) {
         dispSquareArray[stack.size - stack.top - 1].setText(""); //Remove recently pushed element
         topPanel[stack.size - stack.nElts].remove(topLabel); //Remove topLabel from current top
         stack.pop(); //Remove element from actual stack
         topPanel[stack.size - stack.nElts].add(topLabel); //topLabel points to new top
         //Display message of successful undo
-        textSetter.setText("Undo successful. Top = " + Integer.toString(stack.top));
+        textSetter.setText("Undo on Stack " + Integer.toString(stackNumber + 1)+
+                " successful. Top = " + Integer.toString(stack.top));
     }
 
-    public void undoPop() {
+    public void undoPop(int stackNumber) {
         topPanel[stack.size - stack.nElts].remove(topLabel); //Remove topLabel from current top
         stack.push(popStack.pop()); //Push back recently popped element
         topPanel[stack.size - stack.nElts].add(topLabel); //topLabel points to new top
         //Display the element again
         dispSquareArray[stack.size - stack.top - 1].setText(Integer.toString(stack.getVal(stack.top)));
         //Display message of successful undo
-        textSetter.setText("Undo successful. Top = " + Integer.toString(stack.top));
+        textSetter.setText("Undo on Stack " + Integer.toString(stackNumber + 1)+
+                " successful. Top = " + Integer.toString(stack.top));
     }
 
-    public void random(Stack undo) throws InterruptedException {
+    public void random(Stack undo,int stackNumber) throws InterruptedException {
         int choice;
         Random getRandom = new Random(); //object which gets random numbers
         if (stack.nElts == stack.size) {
@@ -174,13 +180,13 @@ public class StackDisplay extends JPanel {
         }
         
         if (choice == 1) {
-            update_pop(undo);
+            update_pop(undo,stackNumber);
         } else {
-            update_push(getRandom.nextInt(100), undo);
+            update_push(getRandom.nextInt(100), undo,stackNumber);
         }
     }
 
-    public void reset() {
+    public void reset(int stackNumber) {
         topPanel[stack.size - stack.nElts].remove(topLabel); //remove topLabel from current position
         
         //Clear actual stack
@@ -193,6 +199,7 @@ public class StackDisplay extends JPanel {
         
         topPanel[stack.size - stack.nElts].add(topLabel); //topLabel points to -1
         //Display reset message
-        textSetter.setText("Stack has been reset. Top = " + Integer.toString(stack.top));
+        textSetter.setText("Stack "+ Integer.toString(stackNumber + 1)+
+                " has been reset. Top = " + Integer.toString(stack.top));
     }
 }

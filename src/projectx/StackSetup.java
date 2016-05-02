@@ -24,17 +24,18 @@ import javax.swing.JPanel;
  */
 public class StackSetup extends JPanel{
     
-    boolean isDynamicStack;
-    int numberOfStacks;
-    JLabel stackMessage;
-    JPanel stackMessagePanel;
-    JButton createStackButton;
-    JCheckBox dynamicStackYes;
-    JComboBox stackNumberComboBox;
+    public boolean isDynamicStack;
+    public int numberOfStacks;
+    public JLabel stackMessage;
+    public JPanel stackMessagePanel;
+    public JButton createStackButton;
+    public JCheckBox dynamicStackYes;
+    public JCheckBox dynamicStackNo;
+    public JComboBox stackNumberComboBox;
     
     public StackSetup(){
         
-        isDynamicStack = false; 
+        isDynamicStack = true; 
         numberOfStacks = 1;
         
         JPanel stackPanel = new JPanel();
@@ -83,13 +84,14 @@ public class StackSetup extends JPanel{
         JLabel dynamicStackLabel = new JLabel("Dynamic Stack :  ");
         
         dynamicStackYes = new JCheckBox("Yes");
-        JCheckBox dynamicStackNo = new JCheckBox("No");
+        dynamicStackNo = new JCheckBox("No");
         
         ButtonGroup dynamicStackBtnGroup = new ButtonGroup();
         dynamicStackBtnGroup.add(dynamicStackYes);
         dynamicStackBtnGroup.add(dynamicStackNo);
         
         dynamicStackYes.setSelected(true);
+        dynamicStackNo.setSelected(false);
         
         horizontalBox.add(dynamicStackLabel);
         horizontalBox.add(dynamicStackYes);
@@ -113,6 +115,17 @@ public class StackSetup extends JPanel{
         
         super.add(stackPanel);
        
+    }
+    
+    public void reset(){
+        
+        isDynamicStack = true; 
+        numberOfStacks = 1;
+        
+        stackNumberComboBox.setSelectedIndex(0);
+        
+        dynamicStackYes.setSelected(true);
+        dynamicStackNo.setSelected(false);
     }
       
 }

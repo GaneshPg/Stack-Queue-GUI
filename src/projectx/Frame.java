@@ -5,13 +5,11 @@
  */
 package projectx;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
@@ -48,6 +46,21 @@ public class Frame extends JFrame {
                 stackFrame = new StackFrame(stackSetup.numberOfStacks,stackSetup.isDynamicStack);
                 scrollPane.setViewportView(stackFrame);
                 tab.setComponentAt(0,scrollPane);
+                
+                stackFrame.stackMenu.settingsBtn.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent ae) {
+                        int response = JOptionPane.showConfirmDialog(null, "Are you sure? "+
+                                "You will lose all the data in the stack(s). Press Yes to continue. "+
+                                "Press No to cancel.", "Confirm",
+                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        if (response == JOptionPane.YES_OPTION){
+                            stackSetup.reset();
+                            scrollPane.setViewportView(stackSetup);
+                            tab.setComponentAt(0,scrollPane);
+                        }
+                    }
+                });
+                
             }
         });
         

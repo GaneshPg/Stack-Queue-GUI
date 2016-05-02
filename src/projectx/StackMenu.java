@@ -33,8 +33,8 @@ public class StackMenu extends JPanel {
     public JButton resetButton;
     public JButton undoButton;
     public JButton randomButton;
+    public JButton settingsBtn;
     public JFormattedTextField text;
-    public boolean undoEnabled, resetEnabled;
     public JComboBox selectDropDown;
 
     public StackMenu(int numberOfStacks) {
@@ -118,7 +118,6 @@ public class StackMenu extends JPanel {
 
         JPanel undoPanel = new JPanel();
         undoPanel.setLayout(new FlowLayout());
-        undoButton.setEnabled(false);
         undoPanel.add(undoButton);
         undoPanel.setBackground(Color.lightGray);
         menuBox.add(undoPanel);
@@ -130,10 +129,17 @@ public class StackMenu extends JPanel {
 
         JPanel resetPanel = new JPanel();
         resetPanel.setLayout(new FlowLayout());
-        resetButton.setEnabled(false);
         resetPanel.add(resetButton);
         resetPanel.setBackground(Color.lightGray);
         menuBox.add(resetPanel);
+        
+        JPanel settingsPanel = new JPanel(new FlowLayout());
+        settingsPanel.setBackground(Color.lightGray);
+        settingsBtn = new JButton("Change Settings");
+        settingsBtn.setMinimumSize(new Dimension(150, 30));
+        settingsBtn.setPreferredSize(resetButton.getMinimumSize());
+        settingsPanel.add(settingsBtn);
+        menuBox.add(settingsPanel);
         
         super.add(menuBox);
     }
