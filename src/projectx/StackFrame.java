@@ -72,7 +72,7 @@ public class StackFrame extends JPanel{
         stackMenuPanel = new JPanel();
         stackMenuPanel.setBorder(BorderFactory.createEtchedBorder(Color.DARK_GRAY, Color.LIGHT_GRAY));
         stackMenuPanel.setBackground(Color.darkGray);
-        stackMenu.setPreferredSize(new Dimension(1350, 100));
+        stackMenu.setPreferredSize(new Dimension(1200, 100));
         stackMenuPanel.add(stackMenu);
         stackMenuPanel.add(Box.createRigidArea(new Dimension(0, 100)));
         
