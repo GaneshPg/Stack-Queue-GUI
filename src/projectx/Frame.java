@@ -37,6 +37,7 @@ public class Frame extends JFrame {
                
         stackSetup = new StackSetup();
         scrollPane.setViewportView(stackSetup);
+        stackSetup.setPreferredSize(tab.getSize());
         
         tab.addTab("Stack", scrollPane);
         tab.setMnemonicAt(0, KeyEvent.VK_1);

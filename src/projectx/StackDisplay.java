@@ -20,10 +20,7 @@ import javax.swing.JPanel;
 public class StackDisplay extends JPanel {
 
     public Stack stack;
-    private JPanel eltPanel[];
-    private JLabel[] dispSquareArray;
     private JLabel topLabel;
-    private JPanel topPanel[];
     public TextInterface textSetter;
     public Stack popStack;
     public StackElement[] rowElement;
@@ -34,59 +31,21 @@ public class StackDisplay extends JPanel {
 
         stack = new Stack(8); //Object of type Stack class used to simulate the stack
         popStack = new Stack(3); //stack used to store recently popped elements, for undo
-
-        /*dispSquareArray = new JLabel[stack.size + 1]; //Label array to display elements
-        eltPanel = new JPanel[stack.size + 1]; //Panel array to hold labels*/
-        
+      
         topLabel = new JLabel("TOP-->"); //Label to point to top element in gui
         topLabel.setFont(new Font("Serif", Font.BOLD, 12)); 
-        topPanel = new JPanel[stack.size + 1]; //Panel to hold topLabel
         
-        Box columnBox, rowBox[]; 
+        Box columnBox; 
         columnBox = Box.createVerticalBox(); //columnBox to hold all rows
         columnBox.add(Box.createRigidArea(new Dimension(0,30)));
-        //rowBox = new Box[stack.size + 1]; //rowBox array to hold topPanel and eltPanel
-
-        //Borders used on elements in GUI
-        
-        /*Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
-        Border empty = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-        Border cmpnd = BorderFactory.createCompoundBorder(border, empty);*/
         
         rowElement = new StackElement[stack.size+1];
 
         for (int i = 0; i < stack.size; i++) {
-            /*dispSquareArray[i] = new JLabel(""); //Empty label
-            
-            topPanel[i] = new JPanel();
-            topPanel[i].setPreferredSize(new Dimension(40, 30));
-            
-            eltPanel[i] = new JPanel();
-            eltPanel[i].setBorder(cmpnd);
-            eltPanel[i].setPreferredSize(new Dimension(55, 45));
-            eltPanel[i].add(dispSquareArray[i]);
-            
-            rowBox[i] = Box.createHorizontalBox();
-            rowBox[i].add(topPanel[i]);
-            rowBox[i].add(eltPanel[i]);*/
-            
-            rowElement[i] = new StackElement();
-            
+            rowElement[i] = new StackElement();         
             columnBox.add(rowElement[i]);
         }
-        
-        /*dispSquareArray[stack.size] = new JLabel("");
-        eltPanel[stack.size] = new JPanel();
-        eltPanel[stack.size].setPreferredSize(new Dimension(55, 45));
-        
-        topPanel[stack.size] = new JPanel();
-        topPanel[stack.size].add(topLabel); //Top pointing to -1 location
-        topPanel[stack.size].setPreferredSize(new Dimension(40, 30));
-        
-        rowBox[stack.size] = Box.createHorizontalBox();
-        rowBox[stack.size].add(topPanel[stack.size]);
-        rowBox[stack.size].add(eltPanel[stack.size]);*/
-        
+      
         rowElement[stack.size] = new StackElement();
         rowElement[stack.size].topPanel.add(topLabel);
         rowElement[stack.size].eltPanel.setBorder(null);

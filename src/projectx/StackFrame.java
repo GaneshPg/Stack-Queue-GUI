@@ -92,7 +92,6 @@ public class StackFrame extends JPanel{
         for(int i=0;i<numberOfStacks;i++){
             stackDisplay[i] = new StackDisplay();
             stackDisplayPanel[i] = new JPanel();
-            stackDisplayPanel[i].add(Box.createRigidArea(new Dimension(0, 425)));
             stackDisplayPanel[i].add(stackDisplay[i]);
             stackDisplayPanel[i].setBorder(BorderFactory.createEtchedBorder(Color.DARK_GRAY, Color.LIGHT_GRAY));
         }

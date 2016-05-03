@@ -35,6 +35,8 @@ public class StackSetup extends JPanel{
     
     public StackSetup(){
         
+        super.setBackground(Color.BLACK);
+        
         isDynamicStack = true; 
         numberOfStacks = 1;
         
@@ -67,6 +69,7 @@ public class StackSetup extends JPanel{
         JPanel selectStackPanel = new JPanel();
         
         JLabel selectStackLabel = new JLabel("Select number of stacks :   ");
+        selectStackLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 28));
         String numbers[]={"1","2","3","4","5"};
         stackNumberComboBox = new JComboBox(numbers);
         stackNumberComboBox.setSelectedIndex(0);
@@ -75,13 +78,14 @@ public class StackSetup extends JPanel{
         selectStackPanel.add(stackNumberComboBox);
         
         Box verticalBox=Box.createVerticalBox();  
-        verticalBox.add(Box.createRigidArea(new Dimension(0,200)));
+        verticalBox.add(Box.createRigidArea(new Dimension(0,100)));
         verticalBox.add(selectStackPanel);
         verticalBox.add(Box.createRigidArea(new Dimension(0,10)));
         
         Box horizontalBox = Box.createHorizontalBox();
         
         JLabel dynamicStackLabel = new JLabel("Dynamic Stack :  ");
+        dynamicStackLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 28));
         
         dynamicStackYes = new JCheckBox("Yes");
         dynamicStackNo = new JCheckBox("No");
@@ -106,12 +110,12 @@ public class StackSetup extends JPanel{
         buttonPanel.add(createStackButton);
         
         verticalBox.add(buttonPanel);
+        verticalBox.add(Box.createRigidArea(new Dimension(0,100)));
         
         JPanel alignPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,400,0));
         alignPanel.add(verticalBox);
         
         stackPanel.add(alignPanel);
-        
         
         super.add(stackPanel);
        
