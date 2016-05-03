@@ -46,14 +46,14 @@ public class StackSetup extends JPanel{
         stackTitle.setForeground(Color.yellow);
         stackTitle.setPreferredSize(new Dimension(800, 80));
         JPanel stackTitlePanel = new JPanel();
-        stackTitlePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 450, 0));
+        stackTitlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         stackTitlePanel.setBackground(Color.darkGray);
         stackTitlePanel.add(stackTitle);
         
         stackMessage = new JLabel(">>>Please select the settings for the stack and press the create stack button");
         stackMessage.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
         stackMessage.setForeground(Color.white);
-        stackMessagePanel = new JPanel();
+        stackMessagePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         
         stackMessagePanel.setBackground(Color.BLACK);
         stackMessagePanel.add(stackMessage);
@@ -107,7 +107,7 @@ public class StackSetup extends JPanel{
         
         verticalBox.add(buttonPanel);
         
-        JPanel alignPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,650,0));
+        JPanel alignPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,400,0));
         alignPanel.add(verticalBox);
         
         stackPanel.add(alignPanel);

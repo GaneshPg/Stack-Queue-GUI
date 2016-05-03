@@ -37,6 +37,8 @@ public class StackFrame extends JPanel{
     
     StackFrame(int numberOfStacks,boolean isDynamicStack){
         
+        super.setBackground(Color.BLACK);
+        
         choiceStack = new Stack[numberOfStacks];
         for(int i=0;i<numberOfStacks;i++)
             choiceStack[i] = new Stack(3);
@@ -52,7 +54,7 @@ public class StackFrame extends JPanel{
         stackTitle.setPreferredSize(new Dimension(800, 80));
         
         JPanel stackTitlePanel = new JPanel();
-        stackTitlePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 450, 0));
+        stackTitlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         stackTitlePanel.setBackground(Color.darkGray);
         stackTitlePanel.add(stackTitle);
         
@@ -61,7 +63,7 @@ public class StackFrame extends JPanel{
         stackMessage.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
         stackMessage.setForeground(Color.white);
         
-        stackMessagePanel = new JPanel();
+        stackMessagePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         stackMessagePanel.setBackground(Color.BLACK);
         stackMessagePanel.add(stackMessage);
         
