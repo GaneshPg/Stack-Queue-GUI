@@ -90,7 +90,7 @@ public class StackFrame extends JPanel{
         
         //Stack display and styling
         for(int i=0;i<numberOfStacks;i++){
-            stackDisplay[i] = new StackDisplay();
+            stackDisplay[i] = new StackDisplay(isDynamic);
             stackDisplayPanel[i] = new JPanel();
             stackDisplayPanel[i].add(stackDisplay[i]);
             stackDisplayPanel[i].setBorder(BorderFactory.createEtchedBorder(Color.DARK_GRAY, Color.LIGHT_GRAY));
@@ -127,7 +127,8 @@ public class StackFrame extends JPanel{
                 if (isNum(str)) {
                     str = str.replace(",", "");
                     int num = Integer.parseInt(str);
-                    stackDisplay[selectedStack].update_push(num, choiceStack[selectedStack],selectedStack);
+                    stackDisplay[selectedStack].update_push(num, choiceStack[selectedStack],selectedStack,isDynamic);
+                    System.out.println(choiceStack[selectedStack].nElts);
                 } else {
                     stackMessage.setText(">>>Invalid number. Enter a valid number to be pushed.");
                 }
@@ -139,7 +140,8 @@ public class StackFrame extends JPanel{
         stackMenu.popButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 int selectedStack = stackMenu.selectDropDown.getSelectedIndex();
-                stackDisplay[selectedStack].update_pop(choiceStack[selectedStack],selectedStack);
+                stackDisplay[selectedStack].update_pop(choiceStack[selectedStack],selectedStack,isDynamic);
+                System.out.println(choiceStack[selectedStack].nElts);
                 stackPanel.updateUI();
             }
         });
@@ -155,12 +157,13 @@ public class StackFrame extends JPanel{
                     return;
                 }
                 int choice = choiceStack[selectedStack].pop();
+                System.out.println(choiceStack[selectedStack].nElts);
                 if (choice == 0) {
                     //Recent operation was push
-                    stackDisplay[selectedStack].undoPush(selectedStack);
+                    stackDisplay[selectedStack].undoPush(selectedStack,isDynamic);
                 } else {
                     //Recent operation was pop
-                    stackDisplay[selectedStack].undoPop(selectedStack);
+                    stackDisplay[selectedStack].undoPop(selectedStack,isDynamic);
                 }
                 stackPanel.updateUI();
             }
@@ -197,8 +200,9 @@ public class StackFrame extends JPanel{
         stackMenu.resetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 int selectedStack = stackMenu.selectDropDown.getSelectedIndex();
-                stackDisplay[selectedStack].reset(selectedStack);
+                stackDisplay[selectedStack].reset(selectedStack,isDynamic);
                 choiceStack[selectedStack].top = -1;
+                choiceStack[selectedStack].nElts = 0;
                 stackPanel.updateUI();
             }
         });
@@ -209,7 +213,7 @@ public class StackFrame extends JPanel{
         SwingWorker<Void, Void> stk_random = new SwingWorker<Void, Void>() {
             protected Void doInBackground() throws Exception { //Repeatedly performs random operations on a background thread
                 Thread.sleep(100);
-                stackDisplay[selectedStack].random(choiceStack[selectedStack],selectedStack);
+                stackDisplay[selectedStack].random(choiceStack[selectedStack],selectedStack,isDynamic);
                 stackPanel.updateUI();
                 Thread.sleep(750);
                 return null;

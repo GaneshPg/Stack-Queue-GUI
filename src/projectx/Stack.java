@@ -43,5 +43,6 @@ public class Stack {
             this.arr[i] = this.arr[i + 1];
         }
         this.top--;
+        this.nElts--;
     }
 };
