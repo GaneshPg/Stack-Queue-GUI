@@ -60,8 +60,8 @@ public class StackFrame extends JPanel{
         
         //Stack message panel and styling
         stackMessage = new JLabel(">>>Stack setup has been made as requested. Perform operations from the menu");
+        stackMessage.setForeground(Color.ORANGE);
         stackMessage.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
-        stackMessage.setForeground(Color.white);
         
         stackMessagePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         stackMessagePanel.setBackground(Color.BLACK);
@@ -100,6 +100,8 @@ public class StackFrame extends JPanel{
         for(int i=0;i<numberOfStacks;i++)
             stackDisplayBox.add(stackDisplayPanel[i]);
         
+        //stackDisplayBox.setPreferredSize(new Dimension(500,500));
+        
         stackPanel.add(stackDisplayBox, BorderLayout.CENTER);
         
         super.add(stackPanel);
@@ -128,7 +130,6 @@ public class StackFrame extends JPanel{
                     str = str.replace(",", "");
                     int num = Integer.parseInt(str);
                     stackDisplay[selectedStack].update_push(num, choiceStack[selectedStack],selectedStack,isDynamic);
-                    System.out.println(choiceStack[selectedStack].nElts);
                 } else {
                     stackMessage.setText(">>>Invalid number. Enter a valid number to be pushed.");
                 }

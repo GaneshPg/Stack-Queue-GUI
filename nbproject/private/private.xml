@@ -5,11 +5,17 @@
         <group>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/StackMenu.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/StackDisplay.java</file>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/Stack.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/StackSetup.java</file>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/Frame.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/StackFrame.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/TextInterface.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/QueueMenu.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/QueueFrame.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/QDisplay.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/StackElement.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/Stack.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/Queue.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/Frame.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ProjectX/src/projectx/ProjectX.java</file>
         </group>
     </open-files>
 </project-private>

@@ -60,6 +60,7 @@ public class StackDisplay extends JPanel {
             dynamicStack = new ArrayList();
             StackElement elt = new StackElement();
             elt.topPanel.add(topLabel);
+            elt.topPanel.setVisible(true);
             elt.eltPanel.setBorder(null);
             dynamicStack.add(elt);
             columnBox.add((StackElement)dynamicStack.get(0));

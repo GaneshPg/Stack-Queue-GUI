@@ -26,10 +26,10 @@ public class Frame extends JFrame {
     QueueFrame queueFrame;
 
     Frame() {
-        super("Project");
+        super("ProjectX");
         super.getContentPane().setBackground(Color.BLACK);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         JTabbedPane tab = new JTabbedPane(); //For the tabs at the top
         

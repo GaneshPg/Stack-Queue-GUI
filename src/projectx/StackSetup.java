@@ -54,7 +54,7 @@ public class StackSetup extends JPanel{
         
         stackMessage = new JLabel(">>>Please select the settings for the stack and press the create stack button");
         stackMessage.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
-        stackMessage.setForeground(Color.white);
+        stackMessage.setForeground(Color.ORANGE);
         stackMessagePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         
         stackMessagePanel.setBackground(Color.BLACK);
